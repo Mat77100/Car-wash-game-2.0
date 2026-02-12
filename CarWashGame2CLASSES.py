@@ -18,8 +18,8 @@ class player:
         return self.costF
     def UpgradeFame(self):
         if self.money >= self.costF:
-            self.money - costF
-            self.costF + (costF * 0.6)
+            self.money - self.costF
+            self.costF + (self.costF * 0.6)
             self.fame + 1
             print(f"Upgrade compleate! Fame at {self.fame}")
         else:
@@ -151,6 +151,7 @@ class Cars(Vehicles):
                 return True
         else:
             return True
+
 
 
 
