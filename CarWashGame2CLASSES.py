@@ -146,10 +146,11 @@ class Cars(Vehicles):
         elif self.FuelTank > 50:
             if random.randint(1,3) == 3:
                 return True
-        elif self.FuelTank > 20
+        elif self.FuelTank > 20:
             if random.randint(1,2) == 2:
                 return True
         else:
             return True
+
 
 
