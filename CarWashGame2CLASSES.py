@@ -65,7 +65,7 @@ class WashStation:
                 self.Q[i] = self.Q[i+1]
             self.BoQ -= 1
     def UpgradeQ(self):
-        if p1.GetBalance()< self.costQueue:
+        if p1.GetBalance()<= self.costQueue:
             print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
         else:
             self.QueueSlots +=1
@@ -74,7 +74,7 @@ class WashStation:
             self.costQueue = self.costQueue * 2
             print(f"Upgrade compleate! New queue has {self.QueueSlots} queue slots")
     def UpgradeSpeed(self):
-        if p1.GetBalance() < self.costSpeed:
+        if p1.GetBalance() <= self.costSpeed:
             print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
         else:
             self.speed = round(self.speed * 0.75,3)
@@ -87,6 +87,14 @@ class CarWash(WashStation):
         super().__init__(speed, costSpeed, costQueue, QueueSlots, BoQ)
         self.FuelTypesUnlocked = 1
     def UnlockNewFuel(self):
+        if self.FuelTypesUnlocked != 3 and p1.GetBalance >=100:
+            p1.EditBalance(-100)
+            self.FuelTypesUnlocked += 1
+            print("New fuel unlocked")
+        else:
+            print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
+        
+            
     def AddToQ(self):
         if not(self.BoQ >= len(self.Q)-1):
             self.Q[self.BoQ] = Cars(20,round(random.uniform(1,1.5),2),random.randint(10,100))
