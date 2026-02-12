@@ -49,7 +49,9 @@ class WashStation:
     def GetCostSpeed(self):
         return self.costSpeed
     def AddToQ(self):
-        pass
+        if not(self.BoQ >= len(self.Q)-1):
+            self.Q[self.BoQ] = "PUT WHATEVER VEHICLE HERE"
+            self.BoQ +=1
     def WashFoQ(self):
         if self.Q[0] != "Empty":
             Selected = self.Q[0]
@@ -61,6 +63,7 @@ class WashStation:
             p1.EditBalance(Selected.GetPay())
             for i in range(0, self.QueueSlots-1):
                 self.Q[i] = self.Q[i+1]
+            self.BoQ -= 1
     def UpgradeQ(self):
         if p1.GetBalance()< self.costQueue:
             print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
@@ -80,61 +83,65 @@ class WashStation:
             print(f"Upgrade compleate! Speed at {self.speed}")
             
 class CarWash(WashStation):
-    def __init__(self, speed, costSpeed, costQueue, QueueSlots, BoQ, FuelType):
+    def __init__(self, speed, costSpeed, costQueue, QueueSlots, BoQ):
         super().__init__(speed, costSpeed, costQueue, QueueSlots, BoQ)
-
-
-#make the car wash first and make the game, then come back adn add the rest of the washes/vehicles
-
-
-
+        self.FuelTypesUnlocked = 1
+    def UnlockNewFuel(self):
+    def AddToQ(self):
+        if not(self.BoQ >= len(self.Q)-1):
+            self.Q[self.BoQ] = Cars(20,round(random.uniform(1,1.5),2),random.randint(10,100))
+            self.BoQ +=1
+    def Refuel(self):
+        Selected = self.Q[0]
+        if Selected.Refuel():
+            Amount = 100 - Selected.GetFuelTank
+            if (Selected.GetFuelType() == "Petrol") and (self.FuelTypesUnlocked >= 1):
+                print("Filled with petrol")
+                p1.EditBalance(1*Amount)
+            if (Selected.GetFuelType() == "Diesel") and (self.FuelTypesUnlocked >= 2):
+                print("Filled with Diesel")
+                p1.EditBalance(1.5*Amount)
+            if (Selected.GetFuelType() == "Super") and (self.FuelTypesUnlocked >= 3):
+                print("Filled with Super")
+                p1.EditBalance(2*Amount)
+        else:
+            print("the car didnt refuel")
 
         
 class Vehicles:
-    def __init__(self, Pay, WashTime,SizeMult):
+    def __init__(self, Pay,SizeMult):
         self.pay = Pay
-        self.WashTime = WashTime
         self.SizeMult = SizeMult
     def GetPay(self):
         return self.Pay
-    def GetWashTime(self):
-        return self.WashTime
     def GetSizeMult(self):
         return self.SizeMult
 
 class Cars(Vehicles):
-    def __init__(self,Pay,WashTime,SizeMult,FuelTank,FuelType):
-        super().__init__(Pay,WashTime,SizeMult)
+    def __init__(self,Pay,SizeMult,FuelTank):
+        super().__init__(Pay,SizeMult)
         self.FuelTank = FuelTank
-        self.FuelType = FuelType
+        A = random.randint(1,3)
+        if A == 1:
+            self.FuelType = "Petrol"
+        elif A == 2:
+            self.FuelType = "Diesel"
+        elif A == 3:
+            self.FuelType = "Super"
     def GetFuelTank(self):
         return self.FuelTank
     def GetFuelType(self):
         return self.FuelType
     def Refuel(self):
         if self.FuelTank > 80:
-           print("Car doesn't need fuel")
+            return False
         elif self.FuelTank > 50:
-            #Different prices for different fuel, make the wash station first for the diff fuel types
+            if random.randint(1,3) == 3:
+                return True
+        elif self.FuelTank > 20
+            if random.randint(1,2) == 2:
+                return True
+        else:
+            return True
 
 
-
-
-
-
-
-
-
-price = 10
-
-costW = 100
-costP = 100
-
-
-
-action = int(0)
-carNum = 0
-shopAct = 0
-
-running = True
-lock = threading.Lock()
