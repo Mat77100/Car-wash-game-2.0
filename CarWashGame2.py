@@ -35,7 +35,7 @@ def carwashmenu():
         Carwash1 = CarWash(1,50,100,3,0)
         def AddLoop():
             while True:
-                if random.randint(1,10) < p1.GetFame():
+                if random.randint(1,8) < p1.GetFame():
                     Carwash1.AddToQ()
                 time.sleep(1)
         def washLoop():
@@ -50,12 +50,15 @@ def carwashmenu():
             Carwash1.UpgradeSpeed(p1)
         def UQ():
             Carwash1.UpgradeQ(p1)
-        UpgradeFame=tk.Button(menu,text=f"Upgrade fame: £{p1.GetCostF()} -- current level - {p1.GetFame()}",command=p1.UpgradeFame)
-        UpgradeSpeed=tk.Button(menu,text=f"Upgrade wash speed: £{Carwash1.GetCostSpeed()} -- current clean delay - {Carwash1.GetSpeed()}",command=US)
-        UpgradeQ=tk.Button(menu,text=f"Upgrade queue size: £{Carwash1.GetCostQueue()} -- current queue max length - {Carwash1.GetQueueSlots()}",command=UQ)
+        UpgradeFame=tk.Button(menu,text=f"Upgrade fame: £{p1.GetCostF()} -- current level - {p1.GetFame()}",command=p1.UpgradeFame,width=60,height=5)
+        UpgradeSpeed=tk.Button(menu,text=f"Upgrade wash speed: £{Carwash1.GetCostSpeed()} -- current time to remove dirt unit - {Carwash1.GetSpeed()}s",command=US,width=60,height=5)
+        UpgradeQ=tk.Button(menu,text=f"Upgrade queue size: £{Carwash1.GetCostQueue()} -- current queue max length - {Carwash1.GetQueueSlots()}",command=UQ,width=60,height=5)
         UpgradeFame.pack()
+        tk.Label(menu,text="Fame increases the chances of a car showing up, maxes out at 10").pack()
         UpgradeSpeed.pack()
+        tk.Label(menu,text="Speed decreases the time it takes to remove 1 unit of dirt").pack()
         UpgradeQ.pack()
+        tk.Label(menu,text="Increases the total queue slots **DELETES CARS IN QUEUE WHEN UPGRADED").pack()
         def UpdateLabels():
             UpgradeFame.config(text=f"Upgrade fame: £{p1.GetCostF()} -- current level - {p1.GetFame()}")
             UpgradeSpeed.config(text=f"Upgrade wash speed: £{Carwash1.GetCostSpeed()} -- current clean delay - {Carwash1.GetSpeed()}")
