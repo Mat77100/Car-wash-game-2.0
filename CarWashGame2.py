@@ -38,7 +38,7 @@ def carwashmenu():
             while True:
                 if random.randint(1,8) < p1.GetFame():
                     Carwash1.AddToQ()
-                time.sleep(1)
+                time.sleep(0.8)
         def washLoop():
             while True:
                 Carwash1.WashFoQ(p1)
@@ -95,4 +95,5 @@ def carwashmenu():
 
 Playbtn = tk.Button(startmenu, text="PLAY!", width=20, height=10, font="Helvetica 15 bold italic",command=main).pack()
 startmenu.mainloop()
+
 
