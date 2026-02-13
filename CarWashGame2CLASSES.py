@@ -19,7 +19,7 @@ class player:
     def GetCostF(self):
         return self.costF
     def UpgradeFame(self):
-        if self.fame ==10:
+        if self.fame ==8:
             print("Max fame reached")
         elif self.money >= self.costF:
             self.money -= self.costF
@@ -71,14 +71,14 @@ class WashStation:
                 self.Q[i] = self.Q[i+1]
             self.BoQ -= 1
     def UpgradeQ(self,p1):
-        if p1.GetBalance()<= self.costQueue:
-            print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
-        else:
+        if p1.GetBalance() >= self.costQueue:
             self.QueueSlots +=1
             self.Q = ["Empty"]*self.QueueSlots
             p1.EditBalance(-self.costQueue)
             self.costQueue = self.costQueue * 2
             print(f"Upgrade compleate! New queue has {self.QueueSlots} queue slots")
+        else:
+            print("\033[31m**Upgrade Failed** ---> Balance too low\033[0m")
     def UpgradeSpeed(self,p1):
         if p1.GetBalance() >= self.costSpeed:
             self.speed = round(self.speed * 0.75,3)

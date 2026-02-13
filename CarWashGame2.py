@@ -4,7 +4,7 @@ import threading
 import tkinter as tk
 import time
 
-p1 = player(50,1,50)
+p1 = player(100,1,50)
 
 is_open = False
 
