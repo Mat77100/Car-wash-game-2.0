@@ -19,6 +19,7 @@ def main():
     main.geometry("500x300")
     startmenu.withdraw()
     Quitbtn = tk.Button(main,text="QUIT",font="5",command=startmenu.destroy).pack()
+    info = tk.Label(main,text="This is a remake of my old car wash game, now it uses OOP to run more efficently and make it easier to add objects. simply hit the open car wash button and wait for cars to arrive, then make upgrades! this is an idel game so it might take a moment.",wraplength=450).pack()
     Balance = tk.Label(main,text=f"Balance: £{p1.GetBalance()}",font="20")
     Balance.pack()
     tk.Button(main,text="Open the car wash station!",font=40, command=carwashmenu).pack()
@@ -59,6 +60,17 @@ def carwashmenu():
         tk.Label(menu,text="Speed decreases the time it takes to remove 1 unit of dirt").pack()
         UpgradeQ.pack()
         tk.Label(menu,text="Increases the total queue slots **DELETES CARS IN QUEUE WHEN UPGRADED").pack()
+        global x
+        x = 0
+        def manuAdd():
+            global x
+            if x == 19:
+                Carwash1.AddToQ()
+                x = 0
+            else:
+                x += 1
+        Manualbtn = tk.Button(menu,text=f"Manually add a car by clicking this button {20-x} more times!",command=manuAdd)
+        Manualbtn.pack()
         def UpdateLabels():
             UpgradeFame.config(text=f"Upgrade fame: £{p1.GetCostF()} -- current level - {p1.GetFame()}")
             UpgradeSpeed.config(text=f"Upgrade wash speed: £{Carwash1.GetCostSpeed()} -- current clean delay - {Carwash1.GetSpeed()}")
@@ -72,6 +84,7 @@ def carwashmenu():
                 else:
                     Qtext += "🚗, "
             CurrentQ.config(text=Qtext,font="80")
+            Manualbtn.config(text=f"Manually add a car by clicking this button {20-x} more times!")
             menu.after(200, UpdateLabels)
         UpdateLabels()
 
