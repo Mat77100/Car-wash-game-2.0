@@ -9,6 +9,14 @@ p1 = player(100,1,50)
 is_open = False
 
 
+#CURRENT ISSUES/TASKS:
+#UPGRADING THE STATION ADDS AN EXTRA SLOT, BUT IT ADDS CARS TO THE SLOT BEFORE THE FIRST
+#ADD THREAD DOESN'T APPEAR TO START UNTILL AN UPGRADE IS MADE
+#INCREASE THE SIZE OF QUEUE
+#FIX REFUEL()
+#CHECK IF SIZE MULTIPLYER WORKS
+
+
 startmenu = tk.Tk(screenName="startmenu",baseName="startmenu",)
 startmenu.geometry("400x200")
 intro = tk.Label(startmenu, text="Hello! Welcome to").pack()
@@ -41,11 +49,12 @@ def carwashmenu():
                 time.sleep(0.8)
         def washLoop():
             while True:
+                Carwash1.Refuel(p1)
                 Carwash1.WashFoQ(p1)
                 time.sleep(1)
         threading.Thread(target=AddLoop, daemon=True).start()
         threading.Thread(target=washLoop, daemon=True).start()
-        CurrentQ = tk.Label(menu,font="80")
+        CurrentQ = tk.Label(menu,font=40)
         CurrentQ.pack()
         def US():
             Carwash1.UpgradeSpeed(p1)
@@ -83,7 +92,7 @@ def carwashmenu():
                     Qtext += "🚙, "
                 else:
                     Qtext += "🚗, "
-            CurrentQ.config(text=Qtext,font="80")
+            CurrentQ.config(text=Qtext,font=40)
             Manualbtn.config(text=f"Manually add a car by clicking this button {20-x} more times!")
             menu.after(200, UpdateLabels)
         UpdateLabels()
@@ -95,5 +104,4 @@ def carwashmenu():
 
 Playbtn = tk.Button(startmenu, text="PLAY!", width=20, height=10, font="Helvetica 15 bold italic",command=main).pack()
 startmenu.mainloop()
-
 

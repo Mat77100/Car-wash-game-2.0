@@ -103,20 +103,21 @@ class CarWash(WashStation):
             self.Q[self.BoQ] = Cars(20,round(random.uniform(1,1.5),2),random.randint(10,100))
             self.BoQ +=1
     def Refuel(self,p1):
-        Selected = self.Q[0]
-        if Selected.Refuel():
-            Amount = 100 - Selected.GetFuelTank
-            if (Selected.GetFuelType() == "Petrol") and (self.FuelTypesUnlocked >= 1):
-                print("Filled with petrol")
-                p1.EditBalance(1*Amount)
-            if (Selected.GetFuelType() == "Diesel") and (self.FuelTypesUnlocked >= 2):
-                print("Filled with Diesel")
-                p1.EditBalance(1.5*Amount)
-            if (Selected.GetFuelType() == "Super") and (self.FuelTypesUnlocked >= 3):
-                print("Filled with Super")
-                p1.EditBalance(2*Amount)
-        else:
-            print("the car didnt refuel")
+        if self.Q[0] != "Empty":
+            Selected = self.Q[0]
+            if Selected.Refuel():
+                Amount = 100 - Selected.GetFuelTank()
+                if (Selected.GetFuelType() == "Petrol") and (self.FuelTypesUnlocked >= 1):
+                    print("Filled with petrol")
+                    p1.EditBalance(1*Amount)
+                if (Selected.GetFuelType() == "Diesel") and (self.FuelTypesUnlocked >= 2):
+                    print("Filled with Diesel")
+                    p1.EditBalance(1.5*Amount)
+                if (Selected.GetFuelType() == "Super") and (self.FuelTypesUnlocked >= 3):
+                    print("Filled with Super")
+                    p1.EditBalance(2*Amount)
+            else:
+                print("the car didnt refuel")
 
         
 class Vehicles:
